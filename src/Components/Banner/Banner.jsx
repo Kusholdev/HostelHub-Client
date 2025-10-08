@@ -52,7 +52,6 @@ const Banner = () => {
                 </div>
 
                 {/* Feature Box */}
-                {/* Feature Box */}
                 <div className="absolute bottom-1 left-5 bg-blue-800/95 text-white p-6 rounded-lg shadow-lg max-w-md w-full md:w-auto">
                     <h2 className="text-xl font-bold mb-4">Hostel facilities</h2>
                     <ul className="space-y-2 text-left">
