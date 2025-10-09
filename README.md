@@ -18,3 +18,4 @@ If you are developing a production application, we recommend using TypeScript wi
  ## Installed packages
 -install farmer motion -npm i framer-motion
 -install Animate on scroll - npm install aos
+-React hook form  - npm install react-hook-form

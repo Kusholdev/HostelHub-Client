@@ -1,8 +1,10 @@
 import React from 'react';
-import {NavLink} from 'react-router';
+import { NavLink } from 'react-router';
 import HostelHubLogo from '../HostelHubLogo/HostelHubLogo';
+import useAuth from '../../hooks/useAuth';
 
 const Navbar = () => {
+    const { user } = useAuth() || {};
     const links = <>
         <li><NavLink to="/">Home</NavLink></li>
         <li><NavLink to="/">Meals</NavLink></li>
@@ -20,11 +22,11 @@ const Navbar = () => {
                     <ul
                         tabIndex={0}
                         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-                       {links}
+                        {links}
                     </ul>
                 </div>
                 <HostelHubLogo></HostelHubLogo>
-              
+
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
@@ -32,7 +34,10 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-            <button className="btn btn-primary text-white"> Join Us</button>
+                {
+                    user ? <button className='btn btn-primary'> Logout</button> :                 <button className="btn btn-primary text-white"> Join Us</button>
+
+                 }
             </div>
         </div>
     );
