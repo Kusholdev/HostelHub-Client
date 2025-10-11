@@ -4,10 +4,13 @@ import { useForm } from 'react-hook-form';
 import { FaEye } from "react-icons/fa";
 import useAuth from '../../hooks/useAuth';
 import SocialLogin from '../SocialLogin/socialLogin';
+import { useNavigate } from 'react-router';
+import Swal from 'sweetalert2'
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const { signIn } = useAuth();
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -16,13 +19,26 @@ const Login = () => {
 
     const onSubmit = (data) => {
         console.log(data);
-        signIn(data.email,data.password)
-        .then(result =>{
-            console.log(result);
-        })
-        .catch(error =>{
-            console.log(error);
-        })
+        signIn(data.email, data.password)
+            .then(result => {
+                console.log(result);
+                Swal.fire({
+                    title: "Successfully Logged In!",
+                    icon: "success",
+                    draggable: true
+                });
+                navigate("/");
+            })
+            .catch(error => {
+                console.log(error);
+
+                Swal.fire({
+                    title: "Error!",
+                    text: error.message,
+                    icon: "error",
+                    confirmButtonColor: "#f44336"
+                });
+            })
 
     }
 
@@ -76,7 +92,7 @@ const Login = () => {
                 <button className="btn bg-[#CAEB66] mt-4 px-40">Login</button>
 
             </form>
-              <SocialLogin></SocialLogin>
+            <SocialLogin></SocialLogin>
         </div>
     );
 };

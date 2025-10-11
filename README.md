@@ -19,3 +19,5 @@ If you are developing a production application, we recommend using TypeScript wi
 -install farmer motion -npm i framer-motion
 -install Animate on scroll - npm install aos
 -React hook form  - npm install react-hook-form
+-sweetAlert2 - npm install sweetalert2
+-Axios - npm install axios
