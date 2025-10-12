@@ -21,8 +21,12 @@ const Navbar = () => {
     const links = (
         <>
             <li><NavLink to="/">Home</NavLink></li>
-            <li><NavLink to="/">Meals</NavLink></li>
+            <li><NavLink to="/meals">Meals</NavLink></li>
             <li><NavLink to="/">Upcoming Meals</NavLink></li>
+
+
+            {/*  This is for Admin */}
+            <li><NavLink to="/addMeal">Add Meal</NavLink></li>
         </>
     );
 

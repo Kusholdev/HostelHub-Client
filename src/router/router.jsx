@@ -4,6 +4,8 @@ import Home from "../Pages/Home/Home";
 import AuthLayout from "../layout/AuthLayout";
 import Login from "../Authentication/Login/Login";
 import Registration from "../Authentication/Registration/Registration";
+import AddMeal from "../Admin/AddMeal/AddMeal";
+import Meals from "../Components/Meals/Meals";
   
  export const router = createBrowserRouter([
     {
@@ -13,6 +15,14 @@ import Registration from "../Authentication/Registration/Registration";
         {
             index:true,
             Component:Home
+        },
+        {
+         path:'addMeal',
+         Component:AddMeal
+        },
+        {
+         path:'meals',
+         Component:Meals
         }
      ]
     },

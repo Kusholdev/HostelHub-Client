@@ -21,3 +21,5 @@ If you are developing a production application, we recommend using TypeScript wi
 -React hook form  - npm install react-hook-form
 -sweetAlert2 - npm install sweetalert2
 -Axios - npm install axios
+-tanstack-Query - npm i @tanstack/react-query
+-Debounce -debounce the input so the query only runs after the user stops typing for a short time.-npm install use-debounce
