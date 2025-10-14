@@ -1,26 +1,64 @@
-import React, { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Meals = () => {
+    const axiosSecure = useAxiosSecure();
+
     const [search, setSearch] = useState("");
     const [category, setCategory] = useState("");
+
+    // Temporary input states for min/max price
+    const [minPriceInput, setMinPriceInput] = useState("");
+    const [maxPriceInput, setMaxPriceInput] = useState("");
+
+    // Actual filter values used in query
     const [minPrice, setMinPrice] = useState("");
     const [maxPrice, setMaxPrice] = useState("");
 
-    // Fetch meals using React Query
-    const { data: meals, isLoading, error } = useQuery({
+    // Apply Filters button handler
+    const applyFilters = () => {
+        setMinPrice(minPriceInput);
+        setMaxPrice(maxPriceInput);
+    };
+
+    // Infinite query for meals
+    const {
+        data,
+        fetchNextPage,
+        hasNextPage,
+        isLoading,
+        error,
+        refetch,
+    } = useInfiniteQuery({
         queryKey: ["meals", search, category, minPrice, maxPrice],
-        queryFn: async () => {
-            const params = { search, category, minPrice, maxPrice };
-            const res = await axios.get("http://localhost:5000/meals", { params });
+        queryFn: async ({ pageParam = 1 }) => {
+            const res = await axiosSecure.get("/meals", {
+                params: {
+                    search,
+                    category,
+                    minPrice,
+                    maxPrice,
+                    page: pageParam,
+                    limit: 10, // number of meals per page
+                },
+            });
+            // backend should return: { meals: [...], nextPage: number | null }
             return res.data;
         },
-        keepPreviousData: true,
+        getNextPageParam: (lastPage) => lastPage.nextPage, // tell React Query the next page
     });
 
-    if (isLoading) return <span className="loading loading-spinner loading-lg"></span>
-        ;
+    // Flatten all pages
+    const allMeals = data ? data.pages.flatMap((page) => page.meals) : [];
+
+    // Refetch when filters change
+    useEffect(() => {
+        refetch();
+    }, [search, category, minPrice, maxPrice]);
+
+    if (isLoading) return <span className="loading loading-spinner loading-lg"></span>;
     if (error) return <p>Error loading meals.</p>;
 
     return (
@@ -51,24 +89,34 @@ const Meals = () => {
                 <input
                     type="number"
                     placeholder="Min Price"
-                    value={minPrice}
-                    onChange={(e) => setMinPrice(e.target.value)}
+                    value={minPriceInput}
+                    onChange={(e) => setMinPriceInput(e.target.value)}
                     className="input input-bordered"
                 />
 
                 <input
                     type="number"
                     placeholder="Max Price"
-                    value={maxPrice}
-                    onChange={(e) => setMaxPrice(e.target.value)}
+                    value={maxPriceInput}
+                    onChange={(e) => setMaxPriceInput(e.target.value)}
                     className="input input-bordered"
                 />
+
+                <button className="btn btn-primary" onClick={applyFilters}>
+                    Apply Filters
+                </button>
             </div>
 
-            {/* Meals list */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {meals && meals.length > 0 ? (
-                    meals.map((meal) => (
+            {/* Infinite Scroll Meals list */}
+            <InfiniteScroll
+                dataLength={allMeals.length}
+                next={fetchNextPage}
+                hasMore={!!hasNextPage}
+                loader={<h4>Loading more meals...</h4>}
+                endMessage={<p className="text-center mt-4">No more meals!</p>}
+            >
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {allMeals.map((meal) => (
                         <div key={meal._id} className="border p-4 rounded-lg shadow">
                             {meal.image && (
                                 <img
@@ -85,11 +133,9 @@ const Meals = () => {
                                 Ingredients: {meal.ingredients.join(", ")}
                             </p>
                         </div>
-                    ))
-                ) : (
-                    <p>No meals found.</p>
-                )}
-            </div>
+                    ))}
+                </div>
+            </InfiniteScroll>
         </div>
     );
 };

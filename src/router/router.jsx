@@ -6,6 +6,7 @@ import Login from "../Authentication/Login/Login";
 import Registration from "../Authentication/Registration/Registration";
 import AddMeal from "../Admin/AddMeal/AddMeal";
 import Meals from "../Components/Meals/Meals";
+import MealsDetailsPage from "../Components/MealsDetailsPage/MealsDetailsPage";
   
  export const router = createBrowserRouter([
     {
@@ -23,6 +24,10 @@ import Meals from "../Components/Meals/Meals";
         {
          path:'meals',
          Component:Meals
+        },
+        {
+         path:'meals/:id',
+         Component:MealsDetailsPage
         }
      ]
     },
