@@ -1,24 +1,31 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router';
+import { Link,useLocation,useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { FaEye } from "react-icons/fa";
 import useAuth from '../../hooks/useAuth';
 import SocialLogin from '../SocialLogin/socialLogin';
-import { useNavigate } from 'react-router';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const { signIn } = useAuth();
-    const navigate = useNavigate();
+
     const {
         register,
         handleSubmit,
         formState: { errors }
     } = useForm();
 
+
+    const location = useLocation();
+    const navigate = useNavigate();
+    const from = location.state?.from || '/';
+
+
+
     const onSubmit = (data) => {
         console.log(data);
+
         signIn(data.email, data.password)
             .then(result => {
                 console.log(result);
@@ -27,7 +34,7 @@ const Login = () => {
                     icon: "success",
                     draggable: true
                 });
-                navigate("/");
+                navigate(from);
             })
             .catch(error => {
                 console.log(error);
@@ -92,7 +99,7 @@ const Login = () => {
                 <button className="btn bg-[#CAEB66] mt-4 px-40">Login</button>
 
             </form>
-            <SocialLogin></SocialLogin>
+            <SocialLogin from={from}></SocialLogin>
         </div>
     );
 };

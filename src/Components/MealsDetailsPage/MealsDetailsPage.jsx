@@ -1,11 +1,28 @@
 import React from 'react';
-import { useParams } from 'react-router';
-import { useQuery } from "@tanstack/react-query";
+import { useParams, useNavigate } from 'react-router';
+import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import useAuth from '../../hooks/useAuth';
 
 const MealsDetailsPage = () => {
     const { id } = useParams();
     const axiosSecure = useAxiosSecure();
+    const queryClient = useQueryClient();
+
+    const { user } = useAuth();
+    const navigate = useNavigate();
+    // --- useMutation for Like Update ---
+    const likeMutation = useMutation({
+        mutationFn: async () => {
+            return await axiosSecure.patch(`/meals/${id}/like`);
+        },
+        onSuccess: () => {
+            // Refetch the meal data after liking
+            queryClient.invalidateQueries(['meal', id]);
+        },
+    });
+
+
     const { data: meal, isLoading, isError } = useQuery({
         queryKey: ['meal', id],
         queryFn: async () => {
@@ -21,6 +38,16 @@ const MealsDetailsPage = () => {
     if (isError) {
         return <p> Face Error to showing the meal</p>
     }
+
+    const handleLike = () => {
+        if (!user) {
+            // Not logged in → redirect to login page and remember where they came from
+            navigate('/login', { state: { from: `/meals/${id}` } });
+            return;
+        }
+        likeMutation.mutate();
+    };
+
     return (
         <div className="max-w-3xl mx-auto p-4">
             {/* Meal Image */}
@@ -64,12 +91,18 @@ const MealsDetailsPage = () => {
             </p>
 
             {/* Like Button */}
-            <button className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 mr-2">
-                ❤️ Like
+            <button className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 mr-2"
+
+                onClick={handleLike}
+
+            >
+                ❤️ Like = {meal.likes}
             </button>
 
             {/* Meal Request Button */}
-            <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+            <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                onClick={handleLike}
+            >
                 Request Meal
             </button>
 
