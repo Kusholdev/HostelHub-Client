@@ -3,11 +3,14 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import Swal from 'sweetalert2'
+import useAuth from '../../hooks/useAuth';
 
 const AddMeal = () => {
     const { register, handleSubmit, reset } = useForm();
     const [MealPic, setMealPic] = useState('');
     const axiosSecure = useAxiosSecure();
+    const {user} =useAuth();
+
     const onSubmit = async (data) => {
         try {
             const ingredientsArray = data.ingredients.split(',').map(item => item.trim());
@@ -131,6 +134,24 @@ const AddMeal = () => {
                     {...register('postTime')}
                     type="datetime-local"
                     className="input input-bordered w-full"
+                />
+
+                <label className="font-medium">User Email</label>
+                <input
+                    {...register('UserEmail')}
+                    type="email"
+                    className="input input-bordered w-full"
+                    defaultValue={user?.email}
+                    readOnly
+                />
+
+                <label className="font-medium">User Name</label>
+                <input
+                    {...register('UserName')}
+                    type="text"
+                    className="input input-bordered w-full"
+                    defaultValue={user?.displayName}
+                    readOnly
                 />
 
                 <button

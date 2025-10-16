@@ -2,18 +2,32 @@
 import React from 'react';
 import useAuth from '../../hooks/useAuth';
 import { useNavigate } from 'react-router';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 const SocialLogin = ({ from }) => {
     const { signInWithGoogle } = useAuth();
 
     const navigate = useNavigate();
 
+    const axiosSecure = useAxiosSecure();
     const handleGoogleSignIn = () => {
         signInWithGoogle()
-            .then((result) => {
+            .then(async(result) => {
 
                 const user = result.user;
                 console.log(result.user);
-                navigate(from);
+
+
+                // update userInfo in DB
+                const userInfo = {
+                    email: user.email,
+                    role: 'user',
+                    Badge: 'Bronze',
+                    created_at: new Date().toISOString(),
+                    last_logged_in: new Date().toISOString()
+                }
+                const userResult = await axiosSecure.post('/users', userInfo);
+                console.log(userResult);
+                navigate(from || "/");
 
 
             })

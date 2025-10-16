@@ -7,6 +7,7 @@ import SocialLogin from '../SocialLogin/socialLogin';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const Registration = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -14,7 +15,7 @@ const Registration = () => {
 
     const[profilePic,setProfilePic]=useState('');
    
-
+   const axiosSecure = useAxiosSecure();
 
     const navigate = useNavigate();
 
@@ -24,8 +25,25 @@ const Registration = () => {
         console.log(data);
 
         createUser(data.email, data.password)
-            .then((result) => {
+            .then(async(result) => {
                 console.log(result.user);
+
+
+                //Update user info in the Database
+
+                const email = data.email;
+                const userInfo={
+                    email:email,
+                    role:'user',
+                    Badge:'Bronze',
+                    created_at:new Date().toISOString(),
+                    last_logged_in:new Date().toISOString()
+                }
+
+              const userResult = await axiosSecure.post('/users',userInfo);
+              console.log(userResult);
+
+
 
                 const updateProfile={
                     displayName: data.name,

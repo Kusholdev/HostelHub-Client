@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import useAxiosSecure from '../../hooks/useAxiosSecure';
@@ -11,7 +11,9 @@ const MealsDetailsPage = () => {
 
     const { user } = useAuth();
     const navigate = useNavigate();
-    // --- useMutation for Like Update ---
+
+    const [reviewText, setReviewText] = useState('');
+    //  useMutation for Like Update 
     const likeMutation = useMutation({
         mutationFn: async () => {
             return await axiosSecure.patch(`/meals/${id}/like`);
@@ -21,6 +23,21 @@ const MealsDetailsPage = () => {
             queryClient.invalidateQueries(['meal', id]);
         },
     });
+
+
+    // Review section mutation 
+    const reviewMutation = useMutation({
+        mutationFn: async (newReview) => {
+            return await axiosSecure.post(`/reviews`, newReview);
+        },
+        onSuccess: () => {
+            setReviewText("");
+            // re-fetch meal to update review count
+            queryClient.invalidateQueries(['meal', id])
+        }
+
+    })
+
 
 
     const { data: meal, isLoading, isError } = useQuery({
@@ -48,6 +65,23 @@ const MealsDetailsPage = () => {
         likeMutation.mutate();
     };
 
+    const handleReviewSubmit = async (e) => {
+        e.preventDefault();
+        console.log(reviewText);
+
+
+        const newReview = {
+            mealId: id,
+            mealTitle: meal.title,
+            userName: user.displayName || "Anonymous",
+            userEmail: user.email,
+            comment: reviewText,
+            createdAt: new Date(),
+        };
+
+        reviewMutation.mutate(newReview);
+    }
+
     return (
         <div className="max-w-3xl mx-auto p-4">
             {/* Meal Image */}
@@ -64,7 +98,7 @@ const MealsDetailsPage = () => {
 
             {/* Distributor Name */}
             <p className="text-gray-600 mb-2">
-                <strong>Distributor:</strong> {meal.distributorName}
+                <strong>Distributor:</strong> {meal.UserName}
             </p>
 
             {/* Description */}
@@ -98,7 +132,10 @@ const MealsDetailsPage = () => {
             >
                 ❤️ Like = {meal.likes}
             </button>
-
+            {/* Reviews collection Button */}
+            <button className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 mr-2">
+                Reviews count = {meal.reviews_count || 0}
+            </button>
             {/* Meal Request Button */}
             <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
                 onClick={handleLike}
@@ -106,23 +143,29 @@ const MealsDetailsPage = () => {
                 Request Meal
             </button>
 
-            {/* Reviews */}
-            <div className="mt-6">
-                <h2 className="text-xl font-semibold mb-2">Reviews</h2>
-                {meal.reviews?.length > 0 ? (
-                    <ul className="space-y-2">
-                        {meal.reviews.map((review, idx) => (
-                            <li key={idx} className="border p-2 rounded">
-                                <p><strong>{review.user}</strong>: {review.comment}</p>
-                                <p>Rating: {review.rating} / 5</p>
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p>No reviews yet.</p>
-                )}
-            </div>
-        </div>
+            {/* Review Input Box */}
+            <form onSubmit={handleReviewSubmit} className="mt-4">
+                <textarea
+                    value={reviewText}
+                    onChange={(e) => setReviewText(e.target.value)}
+                    placeholder="Write your review..."
+                    className="w-full border rounded p-2 mb-2"
+                    rows="3"
+                ></textarea>
+
+
+
+                <button
+                    type="submit"
+                    className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 btn"
+                    disabled={reviewMutation.isLoading}
+
+                > 
+          {reviewMutation.isLoading ? "Submitting..." : "Submit Review"}
+                </button>
+            </form>
+
+        </div >
     );
 };
 
