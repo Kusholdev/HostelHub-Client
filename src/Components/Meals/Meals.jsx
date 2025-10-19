@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { Link } from 'react-router';
 
 const Meals = () => {
     const axiosSecure = useAxiosSecure();
@@ -132,8 +133,12 @@ const Meals = () => {
                             <p className="text-sm mt-1">
                                 Ingredients: {meal.ingredients.join(", ")}
                             </p>
+                            <Link to={`/meals/${meal._id}`} className="mt-5 px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">
+                                Details
+                            </Link>
                         </div>
                     ))}
+
                 </div>
             </InfiniteScroll>
         </div>

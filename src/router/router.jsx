@@ -1,4 +1,4 @@
-import {createBrowserRouter} from "react-router";
+import { createBrowserRouter } from "react-router";
 import RootLayout from "../layout/RootLayout";
 import Home from "../Pages/Home/Home";
 import AuthLayout from "../layout/AuthLayout";
@@ -7,43 +7,57 @@ import Registration from "../Authentication/Registration/Registration";
 import AddMeal from "../Admin/AddMeal/AddMeal";
 import Meals from "../Components/Meals/Meals";
 import MealsDetailsPage from "../Components/MealsDetailsPage/MealsDetailsPage";
-  
- export const router = createBrowserRouter([
-    {
+import PrivateRoutes from "../routes/PrivateRoutes";
+import DashBoardLayout from "../layout/DashBoardLayout";
+import MakeAdmin from "../Admin/MakeAdmin/MakeAdmin";
+
+export const router = createBrowserRouter([
+   {
       path: "/",
-     Component:RootLayout,
-     children:[
-        {
-            index:true,
-            Component:Home
-        },
-        {
-         path:'addMeal',
-         Component:AddMeal
-        },
-        {
-         path:'meals',
-         Component:Meals
-        },
-        {
-         path:'meals/:id',
-         Component:MealsDetailsPage
-        }
-     ]
-    },
-    {
-      path:'/',
-      Component:AuthLayout,
-      children:[
+      Component: RootLayout,
+      children: [
          {
-            path:"login",
-            Component:Login
+            index: true,
+            Component: Home
          },
          {
-            path:'register',
-            Component:Registration
+            path: 'addMeal',
+            Component: AddMeal
+         },
+         {
+            path: 'meals',
+            Component: Meals
+         },
+         {
+            path: 'meals/:id',
+            Component: MealsDetailsPage
          }
       ]
-    }
-  ]);
-  
+   },
+   {
+      path: '/',
+      Component: AuthLayout,
+      children: [
+         {
+            path: "login",
+            Component: Login
+         },
+         {
+            path: 'register',
+            Component: Registration
+         }
+      ]
+   },
+   {
+      path: '/dashboard',
+      element:<PrivateRoutes>
+         <DashBoardLayout></DashBoardLayout>
+      </PrivateRoutes>,
+      children:[
+         {
+            path:'makeAdmin',
+            Component:MakeAdmin
+         }
+      ]
+   }
+]);

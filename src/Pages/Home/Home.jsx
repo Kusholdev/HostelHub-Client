@@ -3,6 +3,7 @@ import Banner from '../../Components/Banner/Banner';
 import FAQ from '../../Components/FAQ/FAQ';
 import Testimonial from '../../Components/Testimonial/Testimonial';
 import MealsByCategory from '../../Components/MealsByCategory/MealsByCategory';
+import MemberShip from '../../Components/Membership/MemberShip';
 
 const Home = () => {
     return (
@@ -10,6 +11,8 @@ const Home = () => {
             <Banner></Banner>
 
             <MealsByCategory></MealsByCategory>
+            {/* Membership section */}
+            <MemberShip></MemberShip>
             {/* Extra section - 1 */}
             <FAQ></FAQ>
             <Testimonial></Testimonial>
