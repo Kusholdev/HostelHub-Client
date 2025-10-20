@@ -25,8 +25,7 @@ const Navbar = () => {
             <li><NavLink to="/">Upcoming Meals</NavLink></li>
 
 
-            {/*  This is for Admin */}
-            <li><NavLink to="/addMeal">Add Meal</NavLink></li>
+          
         </>
     );
 

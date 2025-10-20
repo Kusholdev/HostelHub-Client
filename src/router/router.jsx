@@ -4,7 +4,6 @@ import Home from "../Pages/Home/Home";
 import AuthLayout from "../layout/AuthLayout";
 import Login from "../Authentication/Login/Login";
 import Registration from "../Authentication/Registration/Registration";
-import AddMeal from "../Admin/AddMeal/AddMeal";
 import Meals from "../Components/Meals/Meals";
 import MealsDetailsPage from "../Components/MealsDetailsPage/MealsDetailsPage";
 import PrivateRoutes from "../routes/PrivateRoutes";
@@ -13,6 +12,7 @@ import MakeAdmin from "../Admin/MakeAdmin/MakeAdmin";
 import MyProfile from "../UsersDashboard/myProfile/myProfile";
 import ReviewMeals from "../UsersDashboard/ReviewMeals/ReviewMeals";
 import MyReviews from "../UsersDashboard/MyReviews/MyReviews";
+import AddMeal from "../Admin/AddMeal/AddMeal";
 
 export const router = createBrowserRouter([
    {
@@ -23,10 +23,7 @@ export const router = createBrowserRouter([
             index: true,
             Component: Home
          },
-         {
-            path: 'addMeal',
-            Component: AddMeal
-         },
+
          {
             path: 'meals',
             Component: Meals
@@ -34,7 +31,11 @@ export const router = createBrowserRouter([
          {
             path: 'meals/:id',
             Component: MealsDetailsPage
-         }
+         },
+         {
+            path: 'addMeal',
+            Component:AddMeal
+         },
       ]
    },
    {
@@ -53,26 +54,27 @@ export const router = createBrowserRouter([
    },
    {
       path: '/dashboard',
-      element:<PrivateRoutes>
+      element: <PrivateRoutes>
          <DashBoardLayout></DashBoardLayout>
       </PrivateRoutes>,
-      children:[
+      children: [
          {
-            path:'makeAdmin',
-            Component:MakeAdmin
+            path: 'makeAdmin',
+            Component: MakeAdmin
          },
          {
-            path:'myProfile',
-            Component:MyProfile
+            path: 'myProfile',
+            Component: MyProfile
          },
          {
-            path:'reviewMeals',
-            Component:ReviewMeals
+            path: 'reviewMeals',
+            Component: ReviewMeals
          },
          {
-            path:'myReviews',
-            Component:MyReviews
-         }
+            path: 'myReviews',
+            Component: MyReviews
+         },
+        
       ]
    }
 ]);

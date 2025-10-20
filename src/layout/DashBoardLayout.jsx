@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink, Outlet } from 'react-router';
 import HostelHubLogo from '../Components/HostelHubLogo/HostelHubLogo';
 import useUserRole from '../Admin/useUserRole/useUserRole';
-import { FaHome, FaUser, FaUtensils, FaUserShield, FaSignOutAlt, FaStar } from "react-icons/fa";
+import { FaHome, FaUser, FaUtensils, FaUserShield, FaSignOutAlt, FaStar, FaPlusCircle } from "react-icons/fa";
 
 const DashBoardLayout = () => {
     const { role, roleLoading } = useUserRole();
@@ -85,6 +85,16 @@ const DashBoardLayout = () => {
                                     Make Admin
                                 </NavLink>
                             </li>
+                            <li>
+                                <NavLink
+                                    to="/addMeal"
+                                    className="flex items-center gap-2 hover:text-blue-600 transition"
+                                >
+                                    <FaPlusCircle className="text-blue-500" />
+                                    Add Meal
+                                </NavLink>
+                            </li>
+
                         </>
                     )}
 
