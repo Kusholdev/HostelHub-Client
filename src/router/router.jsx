@@ -10,6 +10,9 @@ import MealsDetailsPage from "../Components/MealsDetailsPage/MealsDetailsPage";
 import PrivateRoutes from "../routes/PrivateRoutes";
 import DashBoardLayout from "../layout/DashBoardLayout";
 import MakeAdmin from "../Admin/MakeAdmin/MakeAdmin";
+import MyProfile from "../UsersDashboard/myProfile/myProfile";
+import ReviewMeals from "../UsersDashboard/ReviewMeals/ReviewMeals";
+import MyReviews from "../UsersDashboard/MyReviews/MyReviews";
 
 export const router = createBrowserRouter([
    {
@@ -57,6 +60,18 @@ export const router = createBrowserRouter([
          {
             path:'makeAdmin',
             Component:MakeAdmin
+         },
+         {
+            path:'myProfile',
+            Component:MyProfile
+         },
+         {
+            path:'reviewMeals',
+            Component:ReviewMeals
+         },
+         {
+            path:'myReviews',
+            Component:MyReviews
          }
       ]
    }
