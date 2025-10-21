@@ -13,6 +13,9 @@ import MyProfile from "../UsersDashboard/myProfile/myProfile";
 import ReviewMeals from "../UsersDashboard/ReviewMeals/ReviewMeals";
 import MyReviews from "../UsersDashboard/MyReviews/MyReviews";
 import AddMeal from "../Admin/AddMeal/AddMeal";
+import AllMeals from "../Admin/AllMealsTable/AllMealsTable";
+import AllMealsTable from "../Admin/AllMealsTable/AllMealsTable";
+import AllReviews from "../Admin/AllReviews/AllReviews";
 
 export const router = createBrowserRouter([
    {
@@ -74,6 +77,14 @@ export const router = createBrowserRouter([
             path: 'myReviews',
             Component: MyReviews
          },
+         {
+            path:'allMeal',
+            Component:AllMealsTable
+         },
+         {
+            path:'allReviews',
+            Component:AllReviews
+         }
         
       ]
    }

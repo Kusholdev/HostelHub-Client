@@ -2,10 +2,37 @@ import React from 'react';
 import { NavLink, Outlet } from 'react-router';
 import HostelHubLogo from '../Components/HostelHubLogo/HostelHubLogo';
 import useUserRole from '../Admin/useUserRole/useUserRole';
-import { FaHome, FaUser, FaUtensils, FaUserShield, FaSignOutAlt, FaStar, FaPlusCircle } from "react-icons/fa";
+import { FaHome, FaUserShield, FaSignOutAlt, FaStar, FaPlusCircle, FaUtensils, FaUser } from "react-icons/fa";
+import useAuth from '../hooks/useAuth';
+import { useNavigate } from 'react-router';
+import Swal from 'sweetalert2'
 
 const DashBoardLayout = () => {
+    const { logOut } = useAuth() || {};
+    const navigate = useNavigate();
     const { role, roleLoading } = useUserRole();
+
+    const handleLogOut = () => {
+        logOut()
+            .then(() => {
+
+                Swal.fire({
+                    title: "LogOut successfully!",
+                    icon: "success",
+                    draggable: true
+                });
+
+                navigate('/login');
+            })
+            .catch((error) => {
+                Swal.fire({
+                    title: "Error!",
+                    text: error.message,
+                    icon: "error",
+                    confirmButtonColor: "#f44336"
+                });
+            })
+    }
 
     return (
         <div className="drawer lg:drawer-open">
@@ -88,19 +115,33 @@ const DashBoardLayout = () => {
                             <li>
                                 <NavLink
                                     to="/addMeal"
-                                    className="flex items-center gap-2 hover:text-blue-600 transition"
+                             className="flex items-center gap-2 hover:text-blue-600 transition"
                                 >
                                     <FaPlusCircle className="text-blue-500" />
                                     Add Meal
                                 </NavLink>
                             </li>
+                            <NavLink
+                                to="/dashboard/allMeal"
+                                className="flex items-center gap-2 m-2"
+                            >
+                                <FaUtensils className="text-blue-500" />
+                                All Meal
+                            </NavLink>
+                            <NavLink
+                                to="/dashboard/allReviews"
+                                className="flex items-center gap-3">
+                                    <FaStar className="ml-2" />
+                                All Reviews
+                            </NavLink>
+
 
                         </>
                     )}
 
                     {/* Logout  */}
                     <li className="mt-5 border-t border-base-300 pt-3">
-                        <button className="flex items-center gap-3 text-red-500 hover:text-red-600">
+                        <button onClick={handleLogOut} className="flex items-center gap-3 text-red-500 hover:text-red-600">
                             <FaSignOutAlt />
                             Logout
                         </button>
