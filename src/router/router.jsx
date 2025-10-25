@@ -16,6 +16,8 @@ import AddMeal from "../Admin/AddMeal/AddMeal";
 import AllMeals from "../Admin/AllMealsTable/AllMealsTable";
 import AllMealsTable from "../Admin/AllMealsTable/AllMealsTable";
 import AllReviews from "../Admin/AllReviews/AllReviews";
+import MemberShip from "../Components/Membership/MemberShip";
+import Payment from "../Pages/Payment/Payment";
 
 export const router = createBrowserRouter([
    {
@@ -37,7 +39,7 @@ export const router = createBrowserRouter([
          },
          {
             path: 'addMeal',
-            Component:AddMeal
+            Component: AddMeal
          },
       ]
    },
@@ -78,14 +80,23 @@ export const router = createBrowserRouter([
             Component: MyReviews
          },
          {
-            path:'allMeal',
-            Component:AllMealsTable
+            path: 'allMeal',
+            Component: AllMealsTable
          },
          {
-            path:'allReviews',
-            Component:AllReviews
+            path: 'allReviews',
+            Component: AllReviews
+         },
+         {
+            path: 'membership',
+            Component: MemberShip
+         },
+
+         {
+            path: 'payment/:email/:plan/:price',
+            Component: Payment
+
          }
-        
       ]
    }
 ]);
