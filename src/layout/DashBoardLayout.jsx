@@ -83,9 +83,9 @@ const DashBoardLayout = () => {
                                 </NavLink>
                             </li>
                             <li>
-                                <NavLink to="/dashboard/reviewMeals" className="flex items-center gap-3">
+                                <NavLink to="/dashboard/RequestedMeals" className="flex items-center gap-3">
                                     <FaUtensils className="text-green-500" />
-                                    Review Meals
+                                    Requested Meals
                                 </NavLink>
                             </li>
                             <li>

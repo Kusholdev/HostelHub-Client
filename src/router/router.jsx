@@ -10,7 +10,7 @@ import PrivateRoutes from "../routes/PrivateRoutes";
 import DashBoardLayout from "../layout/DashBoardLayout";
 import MakeAdmin from "../Admin/MakeAdmin/MakeAdmin";
 import MyProfile from "../UsersDashboard/myProfile/myProfile";
-import ReviewMeals from "../UsersDashboard/ReviewMeals/ReviewMeals";
+import ReviewMeals from "../UsersDashboard/ReviewMeals/RequestedMeals";
 import MyReviews from "../UsersDashboard/MyReviews/MyReviews";
 import AddMeal from "../Admin/AddMeal/AddMeal";
 import AllMeals from "../Admin/AllMealsTable/AllMealsTable";
@@ -19,6 +19,7 @@ import AllReviews from "../Admin/AllReviews/AllReviews";
 import MemberShip from "../Components/Membership/MemberShip";
 import Payment from "../Pages/Payment/Payment";
 import PaymentHistory from "../UsersDashboard/PaymentHistory/PaymentHistory";
+import RequestedMeals from "../UsersDashboard/ReviewMeals/RequestedMeals";
 
 export const router = createBrowserRouter([
    {
@@ -73,8 +74,8 @@ export const router = createBrowserRouter([
             Component: MyProfile
          },
          {
-            path: 'reviewMeals',
-            Component: ReviewMeals
+            path: 'RequestedMeals',
+            Component: RequestedMeals
          },
          {
             path: 'myReviews',
