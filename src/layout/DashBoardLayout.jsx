@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink, Outlet } from 'react-router';
 import HostelHubLogo from '../Components/HostelHubLogo/HostelHubLogo';
 import useUserRole from '../Admin/useUserRole/useUserRole';
-import { FaHome, FaUserShield, FaSignOutAlt, FaStar, FaPlusCircle, FaUtensils, FaUser } from "react-icons/fa";
+import { FaHome, FaUserShield, FaSignOutAlt, FaStar, FaPlusCircle, FaUtensils, FaUser, FaCreditCard } from "react-icons/fa";
 import useAuth from '../hooks/useAuth';
 import { useNavigate } from 'react-router';
 import Swal from 'sweetalert2'
@@ -94,6 +94,12 @@ const DashBoardLayout = () => {
                                     My Reviews
                                 </NavLink>
                             </li>
+                            <li>
+                                <NavLink to="/dashboard/paymentHistory" className="flex items-center gap-3">
+                                    <FaCreditCard className="text-blue-500 text-lg" />
+                                    Payment History
+                                </NavLink>
+                            </li>
                         </>
                     )}
 
@@ -115,7 +121,7 @@ const DashBoardLayout = () => {
                             <li>
                                 <NavLink
                                     to="/addMeal"
-                             className="flex items-center gap-2 hover:text-blue-600 transition"
+                                    className="flex items-center gap-2 hover:text-blue-600 transition"
                                 >
                                     <FaPlusCircle className="text-blue-500" />
                                     Add Meal
@@ -131,7 +137,7 @@ const DashBoardLayout = () => {
                             <NavLink
                                 to="/dashboard/allReviews"
                                 className="flex items-center gap-3">
-                                    <FaStar className="ml-2" />
+                                <FaStar className="ml-2" />
                                 All Reviews
                             </NavLink>
 

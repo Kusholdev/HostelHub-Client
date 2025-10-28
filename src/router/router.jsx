@@ -18,6 +18,7 @@ import AllMealsTable from "../Admin/AllMealsTable/AllMealsTable";
 import AllReviews from "../Admin/AllReviews/AllReviews";
 import MemberShip from "../Components/Membership/MemberShip";
 import Payment from "../Pages/Payment/Payment";
+import PaymentHistory from "../UsersDashboard/PaymentHistory/PaymentHistory";
 
 export const router = createBrowserRouter([
    {
@@ -96,7 +97,10 @@ export const router = createBrowserRouter([
             path: 'payment/:email/:plan/:price',
             Component: Payment
 
-         }
+         },
+         {
+            path:'paymentHistory',
+            Component:PaymentHistory         }
       ]
    }
 ]);
