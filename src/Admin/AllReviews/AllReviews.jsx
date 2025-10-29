@@ -2,11 +2,12 @@ import React from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
-
+import { useNavigate } from 'react-router';
 const AllReviews = () => {
     const axiosSecure = useAxiosSecure();
     const queryClient = useQueryClient();
 
+    const navigate = useNavigate();
     // Fetch all reviews
     const { data: reviews = [], isLoading, error } = useQuery({
         queryKey: ['reviews'],
@@ -29,6 +30,11 @@ const AllReviews = () => {
             Swal.fire('Error', err.message, 'error');
         }
     });
+
+    // const handleViewMeals = (mealId) => {
+    //     navigate(`/meals/${mealId}`);
+    // };
+    
 
     if (isLoading) return <p className="text-center p-6">Loading reviews...</p>;
     if (error) return <p className="text-center p-6 text-red-500">Failed to load reviews</p>;
@@ -59,7 +65,7 @@ const AllReviews = () => {
                                 <td className="border p-2">{review.comment}</td>
                                 <td className="border p-2 text-center">
                                     <div className="flex justify-center gap-2 flex-wrap">
-                                        <button className="bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded">
+                                        <button  className="bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded">
                                             View
                                         </button>
                                         <button

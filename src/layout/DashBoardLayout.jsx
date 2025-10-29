@@ -140,6 +140,12 @@ const DashBoardLayout = () => {
                                 <FaStar className="ml-2" />
                                 All Reviews
                             </NavLink>
+                            <NavLink
+                                to="/dashboard/serveMeals"
+                                className="flex items-center gap-3">
+                                <FaStar className="ml-2" />
+                                Server Meals
+                            </NavLink>
 
 
                         </>

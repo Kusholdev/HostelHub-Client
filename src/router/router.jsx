@@ -20,6 +20,7 @@ import MemberShip from "../Components/Membership/MemberShip";
 import Payment from "../Pages/Payment/Payment";
 import PaymentHistory from "../UsersDashboard/PaymentHistory/PaymentHistory";
 import RequestedMeals from "../UsersDashboard/ReviewMeals/RequestedMeals";
+import ServeMeals from "../Admin/ServeMeals/ServeMeals";
 
 export const router = createBrowserRouter([
    {
@@ -101,7 +102,12 @@ export const router = createBrowserRouter([
          },
          {
             path:'paymentHistory',
-            Component:PaymentHistory         }
+            Component:PaymentHistory     
+          },
+          {
+            path:'serveMeals',
+            Component:ServeMeals
+          }
       ]
    }
 ]);

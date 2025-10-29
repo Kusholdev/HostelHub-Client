@@ -1,7 +1,6 @@
-import React from 'react';
-import {  useNavigate } from 'react-router';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import useAuth from '../../hooks/useAuth';
-
 const MemberShip = () => {
 
   const { user } = useAuth();
@@ -9,16 +8,22 @@ const MemberShip = () => {
   const email = user?.email;
 
 
- 
+
   const plans = [
     { name: 'Silver', price: '$9.99/month', features: ['Basic Access', 'Email Support', 'premium Meal Access'], color: 'border-gray-400' },
     { name: 'Gold', price: '$19.99/month', features: ['All Silver Features', 'Priority Support', 'premium Meal Access'], color: 'border-yellow-500' },
     { name: 'Platinum', price: '$29.99/month', features: ['All Gold Features', 'premium Meal Access', 'Exclusive Deals'], color: 'border-blue-500' },
   ];
-  const handlePlan=(planName,planPrice)=>{
+  const handlePlan = (planName, planPrice) => {
+    if (!user) {
+    
+      navigate('/login');
+      return;
+    }
+
     const cleanPrice = planPrice.replace('$', '').replace('/month', '');
     navigate(`/dashboard/payment/${email}/${planName}/${cleanPrice}`);
-    }
+  }
   return (
     <div className="py-12 bg-gray-100 min-h-screen flex flex-col items-center">
       <h2 className="text-3xl font-bold mb-10 text-gray-800">Upgrade Your Membership</h2>
@@ -38,9 +43,9 @@ const MemberShip = () => {
               ))}
             </ul>
 
-            {/* ✅ Fixed Link syntax */}
+
             <button
-            onClick={()=>handlePlan(plan.name,plan.price)}
+              onClick={() => handlePlan(plan.name, plan.price)}
               className="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
             >
               Upgrade Now
