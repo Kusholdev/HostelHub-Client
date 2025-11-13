@@ -6,6 +6,8 @@ import { FaHome, FaUserShield, FaSignOutAlt, FaStar, FaPlusCircle, FaUtensils, F
 import useAuth from '../hooks/useAuth';
 import { useNavigate } from 'react-router';
 import Swal from 'sweetalert2'
+import { IoServerOutline } from "react-icons/io5";
+import { MdOutlineUpcoming } from "react-icons/md";
 
 const DashBoardLayout = () => {
     const { logOut } = useAuth() || {};
@@ -65,23 +67,10 @@ const DashBoardLayout = () => {
                     {/* Logo */}
                     <HostelHubLogo />
 
-                    {/* Home link */}
-                    <li>
-                        <NavLink to="/" className="flex items-center gap-3">
-                            <FaHome className="text-blue-500" />
-                            Home
-                        </NavLink>
-                    </li>
-
                     {/* User routes */}
                     {!roleLoading && role === 'user' && (
                         <>
-                            <li>
-                                <NavLink to="/dashboard/myProfile" className="flex items-center gap-3">
-                                    <FaUser className="text-purple-500" />
-                                    My Profile
-                                </NavLink>
-                            </li>
+
                             <li>
                                 <NavLink to="/dashboard/RequestedMeals" className="flex items-center gap-3">
                                     <FaUtensils className="text-green-500" />
@@ -106,12 +95,7 @@ const DashBoardLayout = () => {
                     {/* Admin routes */}
                     {!roleLoading && role === 'admin' && (
                         <>
-                            <li>
-                                <NavLink to="/dashboard/myProfile" className="flex items-center gap-3">
-                                    <FaUser className="text-purple-500" />
-                                    My Profile
-                                </NavLink>
-                            </li>
+
                             <li>
                                 <NavLink to="/dashboard/makeAdmin" className="flex items-center gap-3">
                                     <FaUserShield className="text-amber-500" />
@@ -143,8 +127,14 @@ const DashBoardLayout = () => {
                             <NavLink
                                 to="/dashboard/serveMeals"
                                 className="flex items-center gap-3">
-                                <FaStar className="ml-2" />
+                                <IoServerOutline className='ml-2' />
                                 Server Meals
+                            </NavLink>
+                            <NavLink
+                                to="/dashboard/upComingMeals"
+                                className="flex items-center gap-3">
+                                <MdOutlineUpcoming className='ml-2' />
+                                UpComing Meals
                             </NavLink>
 
 

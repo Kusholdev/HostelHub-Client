@@ -21,6 +21,7 @@ import Payment from "../Pages/Payment/Payment";
 import PaymentHistory from "../UsersDashboard/PaymentHistory/PaymentHistory";
 import RequestedMeals from "../UsersDashboard/ReviewMeals/RequestedMeals";
 import ServeMeals from "../Admin/ServeMeals/ServeMeals";
+import UpComingMeals from "../Admin/UpComingMeals/UpComingMeals";
 
 export const router = createBrowserRouter([
    {
@@ -67,6 +68,10 @@ export const router = createBrowserRouter([
       </PrivateRoutes>,
       children: [
          {
+            index: true, // 👈 this means "default child route"
+            element: <h2 className="text-center mt-10 text-xl">Welcome to the Dashboard!</h2>,
+         },
+         {
             path: 'makeAdmin',
             Component: MakeAdmin
          },
@@ -101,13 +106,17 @@ export const router = createBrowserRouter([
 
          },
          {
-            path:'paymentHistory',
-            Component:PaymentHistory     
-          },
-          {
-            path:'serveMeals',
-            Component:ServeMeals
-          }
+            path: 'paymentHistory',
+            Component: PaymentHistory
+         },
+         {
+            path: 'serveMeals',
+            Component: ServeMeals
+         },
+         {
+            path:'upComingMeals',
+            Component:UpComingMeals
+         }
       ]
    }
 ]);
