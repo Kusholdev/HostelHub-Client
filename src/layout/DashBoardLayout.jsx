@@ -5,7 +5,7 @@ import useUserRole from '../Admin/useUserRole/useUserRole';
 import { FaHome, FaUserShield, FaSignOutAlt, FaStar, FaPlusCircle, FaUtensils, FaUser, FaCreditCard } from "react-icons/fa";
 import useAuth from '../hooks/useAuth';
 import { useNavigate } from 'react-router';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import { IoServerOutline } from "react-icons/io5";
 import { MdOutlineUpcoming } from "react-icons/md";
 
@@ -70,7 +70,13 @@ const DashBoardLayout = () => {
                     {/* User routes */}
                     {!roleLoading && role === 'user' && (
                         <>
+                            <li>
+                                <NavLink to="/dashboard/myProfile" className="flex items-center gap-3">
+                                    <FaUserShield className="text-amber-500" />
+                                    myProfile
 
+                                </NavLink>
+                            </li>
                             <li>
                                 <NavLink to="/dashboard/RequestedMeals" className="flex items-center gap-3">
                                     <FaUtensils className="text-green-500" />
@@ -102,6 +108,14 @@ const DashBoardLayout = () => {
                                     Make Admin
                                 </NavLink>
                             </li>
+                            <li>
+                                <NavLink to="/dashboard/myProfile" className="flex items-center gap-3">
+                                    <FaUserShield className="text-amber-500" />
+                                    myProfile
+
+                                </NavLink>
+                            </li>
+
                             <li>
                                 <NavLink
                                     to="/addMeal"
